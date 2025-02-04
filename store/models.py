@@ -69,3 +69,25 @@ class Wishlist(models.Model):
     added_at = models.DateTimeField(auto_now_add=True)
 
 
+class Discount(models.Model):
+    DISCOUNT_TYPE_FIXED = 'F'
+    DISCOUNT_TYPE_PERCENTAGE = 'P'
+
+    DISCOUNT_TYPE = [
+        (DISCOUNT_TYPE_FIXED , 'fixed'),
+        (DISCOUNT_TYPE_PERCENTAGE , 'percentage')
+    ]
+
+    discount_code = models.CharField(max_length=20)
+    discount_type = models.CharField(max_length=1 , choices=DISCOUNT_TYPE)
+    discount_value = models.DecimalField(max_digits=6 , decimal_places=2)
+    discount_currency = models.CharField(max_length=3 , default="$")
+    discount_valid_from = models.DateTimeField()
+    discount_valid_until = models.DateTimeField()
+    discount_max_uses = models.IntegerField(default=0)
+    discount_use_count = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+
