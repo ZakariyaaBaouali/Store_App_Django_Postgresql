@@ -21,7 +21,7 @@ class Product(models.Model):
     product_description = models.TextField()
     product_price = models.DecimalField(max_digits=6 , decimal_places=2)
     product_stock_quantity = models.SmallIntegerField(default=0)
-    product_category = models.ForeignKey(Collection , on_delete=models.SET_NULL)
+    product_category = models.ForeignKey(Collection , on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -47,7 +47,7 @@ class Order(models.Model):
         (ORDER_STATUS_FAILED , 'failed')
     ]
 
-    user = models.ForeignKey(User , on_delete=models.SET_NULL , related_name="user_orders")
+    user = models.ForeignKey(User , on_delete=models.PROTECT , related_name="user_orders")
     order_total_amount = models.DecimalField(max_digits=6 , decimal_places=2)
     order_status = models.CharField(max_length=1 , choices=ORDER_STATUS , default=ORDER_STATUS_PENDING)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -56,7 +56,7 @@ class Order(models.Model):
 
 class OrderItems(models.Model):
     order = models.ForeignKey(Order , on_delete=models.PROTECT , related_name="order_items")
-    product = models.ForeignKey(Product , on_delete=models.SET_NULL)
+    product = models.ForeignKey(Product , on_delete=models.PROTECT)
     order_item_quantity = models.SmallIntegerField()
     order_item_price = models.DecimalField(max_digits=6 , decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -64,7 +64,7 @@ class OrderItems(models.Model):
 
 class Wishlist(models.Model):
     user = models.OneToOneField(User , on_delete=models.CASCADE , primary_key=True)
-    product = models.OneToOneField(Product , on_delete=models.CASCADE , primary_key=True)
+    product = models.OneToOneField(Product , on_delete=models.CASCADE)
     product_quantity = models.DecimalField(max_digits=6 , decimal_places=2)
     added_at = models.DateTimeField(auto_now_add=True)
 
