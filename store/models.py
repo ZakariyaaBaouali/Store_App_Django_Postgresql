@@ -91,3 +91,7 @@ class Discount(models.Model):
 
 
 
+class OrderDiscount(models.Model):
+    order = models.ForeignKey(Order , on_delete=models.CASCADE , related_name="orders_discount")
+    discount = models.ForeignKey(Discount , on_delete=models.CASCADE , related_name="discount_order")
+    applied_at = models.DateTimeField(auto_now_add=True)
