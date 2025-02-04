@@ -25,3 +25,15 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
+class Review(models.Model):
+    user = models.ForeignKey(User , on_delete=models.CASCADE , related_name="user_reviews")
+    product = models.ForeignKey(Product , on_delete=models.CASCADE , related_name="product_reviews")
+    review_rating = models.SmallIntegerField(default=0)
+    review_comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+
+
