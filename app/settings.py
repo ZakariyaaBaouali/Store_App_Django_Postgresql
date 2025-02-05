@@ -73,10 +73,19 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# 🚩🚩🚩🚩🚩
+# quick reminder
+# this data should be an environment variables
+# but just for testing , it's not 🙌
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'store_db',
+        'USER': 'admin',
+        'PASSWORD': 'admin_password',
+        'HOST': 'localhost',  # Not "database" because Django is outside Docker
+        'PORT': '5432',
     }
 }
 
