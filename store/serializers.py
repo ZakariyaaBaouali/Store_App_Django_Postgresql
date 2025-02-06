@@ -11,7 +11,7 @@ class ProductSerializer(serializers.Serializer):
 class UserSerializer(serializers.Serializer):
     class Meta:
         model = User
-        fields = ['user_name', 'user_email', 'user_profile_url', 'created_at', 'updated_at']
+        fields = ['id', 'user_name', 'user_email', 'user_profile_url', 'created_at', 'updated_at']
 
 
 class CollectionSerializer(serializers.Serializer):
