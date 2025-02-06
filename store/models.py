@@ -9,11 +9,17 @@ class User(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return f'{self.user_name} {self.user_email}'
+
 
 class Collection(models.Model):
     collection_name = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.collection_name}'
 
 
 class Product(models.Model):
@@ -25,6 +31,9 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return f'{self.product_name} {self.product_description}'
+
 
 class Review(models.Model):
     user = models.ForeignKey(User , on_delete=models.CASCADE , related_name="user_reviews")
@@ -33,6 +42,9 @@ class Review(models.Model):
     review_comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.user} {self.product} {self.review_comment}'
 
 
 
@@ -52,6 +64,9 @@ class Order(models.Model):
     order_status = models.CharField(max_length=1 , choices=ORDER_STATUS , default=ORDER_STATUS_PENDING)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f'{self.user} {self.order_total_amount}'
+
 
 
 class OrderItems(models.Model):
@@ -61,12 +76,18 @@ class OrderItems(models.Model):
     order_item_price = models.DecimalField(max_digits=6 , decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f'{self.order} {self.product} {self.order_item_quantity}'
+
 
 class Wishlist(models.Model):
     user = models.ForeignKey(User , on_delete=models.CASCADE , related_name="user_wishlist")
     product = models.ForeignKey(Product , on_delete=models.CASCADE)
     product_quantity = models.DecimalField(max_digits=6 , decimal_places=2)
     added_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.user} {self.product}'
 
 
 class Discount(models.Model):
@@ -89,9 +110,15 @@ class Discount(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return f'{self.discount_code} {self.discount_value}'
+
 
 
 class OrderDiscount(models.Model):
     order = models.ForeignKey(Order , on_delete=models.CASCADE , related_name="orders_discount")
     discount = models.ForeignKey(Discount , on_delete=models.CASCADE , related_name="discount_order")
     applied_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.order} {self.discount}'
