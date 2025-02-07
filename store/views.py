@@ -1,5 +1,6 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework import status
 from .servers import product_server
 
 
@@ -16,7 +17,10 @@ def product_detail(request, id):
     return Response(data)
 
 
-@api_view(['POST'])
-def create_product(request):
-    data = product_server.create_new_product(request)
-    return Response(data)
+@api_view(["POST" , "PATCH"])
+def manage_product(request):
+    if request.method == 'POST':
+        product_server.create_new_product(request)
+        return Response(status=status.HTTP_201_CREATED)
+    elif request.method == 'PATCH':
+        return Response("ok")

@@ -18,8 +18,5 @@ def get_product_details(request: Request, id):
 
 def create_new_product(request: Request):
     serializer = ProductSerializer(data=request.data)
-    if (serializer.is_valid()):
-        data = serializer.validated_data
-        return data
-    else:
-        return "no valid data"
+    serializer.is_valid(raise_exception=True)
+    serializer.save()

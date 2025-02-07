@@ -3,21 +3,21 @@ from rest_framework import serializers
 from .models import Product, User, Collection, Order, Review, OrderItems, Discount, OrderDiscount, Wishlist
 
 
-class CollectionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Collection
-        fields = '__all__'
-
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = '__all__'
 
     product_tax = serializers.SerializerMethodField(method_name='calculate_tax')
-    product_category = CollectionSerializer()
 
     def calculate_tax(self, product: Product):
         return product.product_price * Decimal(1.1)
+
+
+class CollectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Collection
+        fields = '__all__'
 
 
 class UserSerializer(serializers.ModelSerializer):
